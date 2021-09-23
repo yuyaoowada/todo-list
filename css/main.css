@@ -1,0 +1,165 @@
+@charset "UTF-8";
+html {
+  font-size: 1em;
+  /* 16px */
+  line-height: 1.5;
+  /* 24px */
+}
+
+body {
+  /*color: #212121;*/
+  /*background-color: #fff;*/
+  font-family: Nunito, "Roboto", "Droid Sans", sans-serif;
+}
+
+h1 {
+  font-family: Montserrat, sans-serif;
+  border-bottom: 3px solid #54ddff;
+  border-image: linear-gradient(to right, #54ddff 0%, white 100%);
+  border-image-slice: 1;
+}
+
+#container {
+  width: 700px;
+  height: 1100px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+}
+
+#sectionArea {
+  width: 340px;
+  height: 100%;
+  border-right: 1px solid gray;
+  float: left;
+  overflow-y: scroll;
+}
+
+#itemArea {
+  width: 335px;
+  height: 100%;
+  float: right;
+  overflow-y: scroll;
+}
+
+#addSectionBtn {
+  width: auto;
+}
+
+#addItemBtn {
+  width: auto;
+}
+
+.section-element {
+  width: 100%;
+  font-size: 22px;
+  min-height: auto;
+  padding-left: 7px;
+  display: flex
+}
+
+.item-element {
+  width: 100%;
+  font-size: 22px;
+  min-height: auto;
+  padding-left: 7px;
+  display: flex
+}
+
+.selected-icon {
+  font-size: 16px;
+  margin-bottom: 0.6px;
+  margin-right: 2px;
+  color: #0094ff;
+}
+
+.close {
+  margin-right: 17px;
+  vertical-align: middle;
+}
+
+.todo-status {
+  vertical-align: middle;
+}
+
+.section-name-area {
+  width: 85%;
+  height: 100%;
+  float: left;
+  cursor: pointer;
+}
+
+.item-name-area {
+  width: 80%;
+  height: 100%;
+}
+
+.todostatus-area {
+  width: 10%;
+  height: 100%;
+}
+
+.sectionedit-area {
+  width: 15%;
+  height: 100%;
+  text-align: center;
+  color: gray;
+}
+
+.todoedit-area {
+  width: 10%;
+  height: 100%;
+}
+
+.glyphicon-ok {
+  font-size: 12px;
+  color: #0094ff;
+}
+
+.name-edit {
+  width: 85%;
+  height: 33px;
+}
+
+.display-todo-status {
+  float: right;
+}
+
+.completed {
+  color: #33cfff;
+}
+
+.uncomplete {
+  color: #959899;
+}
+
+select {
+  /* styling */
+  background-color: white;
+  border: thin solid gray;
+  border-radius: 4px;
+  display: inline-block;
+  font: inherit;
+  line-height: 1.5em;
+  padding: 0.3em 3.5em 0.3em 1em;
+  /* reset */
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+select.minimal {
+  background-image: linear-gradient(45deg, transparent 50%, gray 50%), linear-gradient(135deg, gray 50%, transparent 50%), linear-gradient(to right, #ccc, #ccc);
+  background-position: calc(100% - 20px) calc(1em), calc(100% - 15px) calc(1em), calc(100% - 2.5em) 0.3em;
+  background-size: 5px 5px, 5px 5px, 1px 1.5em;
+  background-repeat: no-repeat;
+}

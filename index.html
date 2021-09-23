@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <title>TODO LIST</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/dfdfa88a36.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+  <div id="container">
+    <h1>TODO LIST</h1>
+    <div id="app">
+      <!-- セクションの範囲 -->
+      <div id="sectionArea">
+        <button v-on:click="addSection" type="button" id="addSectionBtn" class="btn btn-primary">セクション追加</button>
+        <div v-on:click="selectSection(s.id)" class="section-element" v-for="s in sections" v-key="s.id">
+          <div v-if="!s.editing" @dblclick="editName(s)" class="section-name-area">
+            <span v-if="selectedSectionId === s.id" class="selected-icon glyphicon glyphicon-chevron-right"></span>
+            {{s.name}}
+          </div>
+          <input v-else class="name-edit" type="text" v-model="s.name" @blur="doneEditSection(s)"
+            @keyup.enter="doneEditSection(s)" @keyup.esc="cancelEditSection(s)" v-focus>
+          <div class="sectionedit-area">
+            <div class="dropdown">
+              <button class="btn btn-white dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+              </button>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#" v-for="(e, index) in editList" v-bind:value="index" v-bind:key="index"
+                  @click="editSection(index, s)">{{ e.name }}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Todo項目の範囲 -->
+      <div id="itemArea">
+        <button v-show="selectedSectionId !== null" v-on:click="addItem" type="button" id="addItemBtn"
+          class="btn btn-primary">Todo追加</button>
+        <select v-show="selectedSectionId !== null" v-model="selectedTodoStatus" class="display-todo-status minimal">
+          <option v-for="(todoStatus, index) in todoStatusList" v-bind:value="index" v-bind:key="index">
+            {{todoStatus.name}}
+          </option>
+        </select>
+        <div v-on:click="selectItem(item.id)" class="item-element" v-for="item in currentItems" v-key="item.id">
+          <div class="todostatus-area">
+            <i class="far fa-check-circle" v-bind:class="item.isComplete ? 'completed' : 'uncomplete' " role="button"
+              @click="updateTodoStatus(item)"></i>
+          </div>
+          <div v-if="!item.editing" @dblclick="editName(item)" class="item-name-area"
+            v-bind:class="item.isComplete ? 'completed' : '' ">
+            <span v-if="selectedItemId === item.id"></span> {{item.name}}
+          </div>
+          <input v-else class="name-edit" type="text" v-model="item.name" @blur="doneEditItem(item)"
+            @keyup.enter="doneEditItem(item)" @keyup.esc="cancelEditItem(item)" v-focus>
+          <div class="todoedit-area">
+            <div class="dropdown">
+              <button class="btn btn-white dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+              </button>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#" v-for="(e, index) in editList" v-bind:value="index" v-bind:key="index"
+                  @click="editItem(index, item)">{{ e.name }}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-storage.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>
